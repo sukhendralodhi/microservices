@@ -17,8 +17,19 @@ import crypto from "node:crypto";
 // const requestId = crypto.randomUUID();
 // console.log(requestId);
 
-const randomBytes = crypto.randomBytes(16).toString("hex");
-console.log(randomBytes.length);
+// const randomBytes = crypto.randomBytes(16).toString("hex");
+// console.log(randomBytes.length);
 
-const createHash = crypto.createHash
+// const text = "Hello Node";
+
+// const createHash = crypto.createHash("sha256").update(text).digest("hex");
+// console.log(createHash);
+
+const secret = "my-super-secret-key";
+const message = "user_id=1";
+
+const signature = crypto.createHmac("sha256", secret).update(message).digest("hex");
+console.log(signature);
+
+
 
