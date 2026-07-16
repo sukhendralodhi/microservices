@@ -9,7 +9,7 @@ function runOsDemo(): void {
     console.log("Temp Directory", os.tmpdir());
 }
 
-// runOsDemo();
+runOsDemo();
 
 function getCPUSInfo(): void {
     const cpus = os.cpus();
@@ -25,7 +25,7 @@ function getCPUSInfo(): void {
     }
 }
 
-// getCPUSInfo();
+getCPUSInfo();
 
 function specification(): void {
     const totalMemoryGB = os.totalmem() / 1024 ** 3;
