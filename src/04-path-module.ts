@@ -21,3 +21,12 @@ const uploadFilePath = path.join(
 )
 
 console.log(uploadFilePath);
+
+// final part of path (here for exmaple if we get then we will get profile.png)
+const finalPath = path.basename(uploadFilePath);
+const fileExtensionName = path.extname(uploadFilePath);
+const parentFolder = path.dirname(uploadFilePath);
+
+console.log("The final path is:", finalPath);
+console.log("Extension of file: ", fileExtensionName);
+console.log("Parent folders of file: ", parentFolder);
