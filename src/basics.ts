@@ -59,3 +59,54 @@ function add(a: number, b: number): number {
     return a + b; //  the last number is return type 
 }
 
+interface Product {
+    name: string;
+    price: number;
+    discount?: number
+}
+
+const product: Product = {
+    name: "Banana",
+    price: 200,
+    discount: 10
+}
+
+const product1: Product = {
+    name: "Macbook",
+    price: 120000
+}
+
+// console.log(product1);
+
+
+function getFirst<T>(arr: T[]): T[] {
+    return arr;
+}
+
+const arrNumbers = getFirst<number>([1, 2, 3]);
+const arrStrings = getFirst<string>(["sanju", "mohan"]);
+// console.log(arrStrings)
+
+enum Status {
+    Pending,
+    Active,
+    Completed
+}
+
+let currentStatus: Status = Status.Active;
+// console.log(currentStatus); // this return: 1
+// console.log(Status[currentStatus]); // this will return: Active
+
+
+// Type narrowing  
+function printId(id: string | number): void {
+    if (typeof id === "string") {
+        console.log(id.toUpperCase());
+    } else {
+        console.log(id.toFixed(2));
+    }
+}
+
+// printId(10.4567);
+// printId("sanju");
+
