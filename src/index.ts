@@ -42,7 +42,7 @@ app.delete("/todo/:id", (req: Request, res: Response) => {
 
     todos.splice(todoIndex, 1);
 
-    res.status(200).json({ message: "Todo deleted" });
+    return res.status(200).json({ message: "Todo deleted" });
 
 });
 
@@ -60,7 +60,7 @@ app.put("/todo/:id", (req: Request, res: Response) => {
 
     todos[index].completed = completed;
 
-    res.status(200).json({
+    return res.status(200).json({
         message: "Todo updated",
         todo: todos[index]
     });
