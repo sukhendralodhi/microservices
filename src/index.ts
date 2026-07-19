@@ -15,7 +15,7 @@ let todos: Todo[] = [
 
 // GET all todos
 
-app.get("/todos", (req: Request, res: Response) => {
+app.get("/todos", (_req: Request, res: Response) => {
     res.status(200).json(todos);
 });
 
@@ -27,7 +27,7 @@ app.post("/todos", (req: Request, res: Response) => {
         completed: false
     };
     todos.push(newTodo);
-    res.status(201).json(newTodo);
+    return res.status(201).json(newTodo);
 });
 
 // delete a todo
