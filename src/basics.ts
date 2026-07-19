@@ -110,3 +110,23 @@ function printId(id: string | number): void {
 // printId(10.4567);
 // printId("sanju");
 
+// any vs unknown 
+
+let a: any = "Hello"; // allowed, but TypeScript won't check anything - risky
+// console.log(a.toUpperCase());
+
+let b: unknown = "Mohan";
+
+if (typeof b === "string") {
+    console.log(b.toUpperCase()); // now it's allowed
+}
+
+// Utility types — TypeScript ships with handy built-in helpers:
+interface UserDetails {
+    name: string;
+    age: number;
+    email: string
+}
+
+type PartialUser = Partial<UserDetails>; // all properties become optional
+type UserPreview = Pick<UserDetails, "name" | "email">; // only pick certain properties
