@@ -130,3 +130,12 @@ interface UserDetails {
 
 type PartialUser = Partial<UserDetails>; // all properties become optional
 type UserPreview = Pick<UserDetails, "name" | "email">; // only pick certain properties
+
+function wrapInArray<T>(value: T): T[] {
+    return [value]
+}
+
+// console.log(wrapInArray(5));        // [5]
+// console.log(wrapInArray("hello"));  // ["hello"]
+// console.log(wrapInArray(true));     // [true]
+
