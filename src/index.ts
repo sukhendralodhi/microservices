@@ -11,7 +11,7 @@ interface Todo {
 
 let todos: Todo[] = [
     { id: 1, title: "Learn Typescript", completed: false },
-]
+];
 
 // GET all todos
 
@@ -68,4 +68,4 @@ app.put("/todo/:id", (req: Request, res: Response) => {
 
 app.listen(3000, () => {
     console.log("Server running on http://localhost:3000");
-})
+});
