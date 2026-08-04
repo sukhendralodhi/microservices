@@ -9,7 +9,7 @@
 // encrypt hashing
 
 const textBuffer = Buffer.from("Hello");
-// console.log(textBuffer);
+console.log(textBuffer);
 // console.log(textBuffer.length);
 
 // N - 4e
@@ -22,7 +22,7 @@ const textBuffer = Buffer.from("Hello");
 // alloc. 
 
 const fixedBuffer = Buffer.alloc(5);
-// console.log(fixedBuffer);
+console.log(fixedBuffer);
 // console.log(fixedBuffer.length)
 // fixedBuffer.write("API");
 // console.log(fixedBuffer);
