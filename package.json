@@ -13,7 +13,8 @@
     "05": "tsx src/05-timers-module.ts",
     "06": "tsx src/basics.ts",
     "07": "tsx src/06-callback-promises-async-await.ts",
-    "08": "tsx src/08-promises-async-await.ts"
+    "08": "tsx src/08-promises-async-await.ts",
+    "09": "tsx src/09-async-await.ts"
   },
   "keywords": [],
   "author": "",
