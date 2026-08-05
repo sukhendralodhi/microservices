@@ -37,14 +37,14 @@ const readableStream = Readable.from([
 ]);
 
 const uppercaseTransform = new Transform({
-    transform(chunk, encoding, callback) {
+    transform(chunk, _encoding, callback) {
         const text = chunk.toString();
         callback(null, text.toUpperCase());
     }
 });
 
 const writableStream = new Writable({
-    write(chunk, encoding, callback) {
+    write(chunk, _encoding, callback) {
         console.log("recieved chunks: ", chunk.toString());
         callback();
     },
