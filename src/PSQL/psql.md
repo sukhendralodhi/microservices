@@ -50,3 +50,11 @@ WHERE sku IN ('TAB001', 'TAB002');
 UPDATE products SET category = 'Office'
 WHERE sku IN ('STA001', 'STA002', 'LMP001', 'FAN001');
 ```
+
+```sql
+SELECT name, category, price FROM products
+WHERE category = 'Laptops';
+
+SELECT * FROM products
+WHERE price > 10000;
+```
