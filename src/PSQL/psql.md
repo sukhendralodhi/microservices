@@ -57,4 +57,22 @@ WHERE category = 'Laptops';
 
 SELECT * FROM products
 WHERE price > 10000;
+
+SELECT name, category, price FROM products
+WHERE category = 'Laptops'
+AND price > 1000;
+
+-- SELECT name, category, price FROM products
+-- WHERE category IN('Laptops', 'Audio');
+
+SELECT name, category, price FROM products
+WHERE category = 'Laptops' OR category = 'Audio';
+
+SELECT name, category, price FROM products
+WHERE category != 'Laptops';
+
+SELECT name, category, price FROM products
+WHERE NOT category = 'Laptops';
+
+
 ```
