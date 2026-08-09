@@ -74,5 +74,28 @@ WHERE category != 'Laptops';
 SELECT name, category, price FROM products
 WHERE NOT category = 'Laptops';
 
+SELECT name, category, stock FROM products
+WHERE (category = 'Laptops' OR category = 'Audio')
+AND stock > 10;
+```
 
+<!-- like ilike pattern -->
+
+1. like -> case sensitive pattern match
+2. ilike -> case insebsitive pattern match
+3. % -> amy no of character
+exactly one char
+
+```sql
+-- the after % means anything can come
+
+SELECT name, price FROM products
+WHERE name LIKE 'Wireless%';
+
+SELECT name, price FROM products
+WHERE name ILIKE '%inch%';
+
+SELECT name, description FROM products
+WHERE name ILIKE '%gaming%'
+OR description ILIKE '%hdmi%';
 ```
