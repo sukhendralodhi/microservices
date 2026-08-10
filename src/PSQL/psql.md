@@ -316,4 +316,17 @@ WHERE first_name LIKE '_o%';
 SELECT first_name, email, city, specialization
 FROM trainees
 WHERE specialization LIKE 'P%';
+
+SELECT SUM(stipend) AS total_stipend
+FROM trainees;
+
+SELECT ROUND(AVG(stipend), 2) AS avg_stipend
+FROM trainees;
+
+SELECT MAX(stipend) AS highest_stipend FROM trainees;
+
+SELECT MIN(stipend) AS highest_stipend FROM trainees;
+
+SELECT COUNT(trainee_id) AS total_trainees 
+FROM trainees;
 ```
