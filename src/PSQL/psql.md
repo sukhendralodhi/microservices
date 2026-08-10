@@ -287,4 +287,33 @@ ORDER BY stipend DESC;
 SELECT first_name, email, stipend
 FROM trainees
 ORDER BY stipend ASC;
+
+-- Find emails ending with gmail.com.
+SELECT first_name, email, stipend
+FROM trainees
+WHERE email LIKE '%gmail.com';
+
+-- Find emails containing yahoo.
+SELECT first_name, email, stipend
+FROM trainees
+WHERE email LIKE '%yahoo%';
+
+-- Find first names starting with A.
+SELECT first_name, email FROM trainees
+WHERE first_name LIKE 'A%';
+
+-- Find cities ending with i.
+SELECT first_name, email, city
+FROM trainees
+WHERE city LIKE '%i';
+
+-- Find names whose second letter is o.
+SELECT first_name, email, city
+FROM trainees
+WHERE first_name LIKE '_o%';
+
+-- Find specializations starting with P.
+SELECT first_name, email, city, specialization
+FROM trainees
+WHERE specialization LIKE 'P%';
 ```
