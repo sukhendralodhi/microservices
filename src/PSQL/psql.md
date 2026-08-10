@@ -98,4 +98,15 @@ WHERE name ILIKE '%inch%';
 SELECT name, description FROM products
 WHERE name ILIKE '%gaming%'
 OR description ILIKE '%hdmi%';
+
+
+SELECT name, price, category FROM products
+ORDER BY price ASC;
+
+SELECT name, price, category FROM products
+ORDER BY price DESC;
+
+SELECT name, price, category
+FROM products
+ORDER BY category ASC, price DESC;
 ```
