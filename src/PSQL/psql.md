@@ -110,3 +110,26 @@ SELECT name, price, category
 FROM products
 ORDER BY category ASC, price DESC;
 ```
+
+
+```sql
+
+-- limit => how many rows you want to return 
+-- offset => how many row we want to skip
+
+SELECT name, price, category
+FROM products
+ORDER BY price ASC
+LIMIT 10;
+
+SELECT name, price, category
+FROM products
+ORDER BY price ASC
+LIMIT 10 OFFSET 0;
+
+SELECT name, price, category
+FROM products
+ORDER BY price ASC
+LIMIT 10 OFFSET 10;
+
+```
