@@ -226,3 +226,65 @@ DELETE FROM products
 WHERE sku = 'WEBC0099'
 RETURNING name, price, sku;
 ```
+
+```sql
+CREATE TABLE trainees(
+	trainee_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50),
+	last_name VARCHAR(50),
+	email VARCHAR(100),
+	city VARCHAR(50),
+	specialization VARCHAR(50),
+	stipend DECIMAL(10,2)
+);
+
+INSERT INTO trainees
+(first_name, last_name, email, city, specialization, stipend)
+VALUES
+('Arjun', 'Kapoor', 'arjun@gmail.com', 'Mumbai', 'Java', 18000),
+('Sneha', 'Patel', 'sneha@yahoo.com', 'Ahmedabad', 'Python', 22000),
+('Rohan', 'Sharma', 'rohan@gmail.com', 'Delhi', 'React', 20000),
+('Kiran', 'Yadav', 'kiran@hotmail.com', 'Lucknow', 'NodeJS', 24000),
+('Pooja', 'Mehta', 'pooja@gmail.com', 'Mumbai', 'React', 21000),
+('Aniket', 'Joshi', 'aniket@yahoo.com', 'Pune', 'Java', 19000),
+('Divya', 'Verma', 'divya@gmail.com', 'Delhi', 'Python', 25000),
+('Mohit', 'Singh', 'mohit@gmail.com', 'Mumbai', 'NodeJS', 26000),
+('Nisha', 'Gupta', 'nisha@yahoo.com', 'Delhi', 'React', 23000),
+('Tarun', 'Mishra', 'tarun@gmail.com', 'Pune', 'Java', 17500),
+('Komal', 'Soni', 'komal@gmail.com', 'Ahmedabad', 'Python', 21500),
+('Deepak', 'Rathore', 'deepak@hotmail.com', 'Mumbai', 'React', 27000),
+('Isha', 'Chauhan', 'isha@gmail.com', 'Delhi', 'NodeJS', 24500),
+('Vivek', 'Pandey', 'vivek@yahoo.com', 'Lucknow', 'React', 20500),
+('Aman', 'Tiwari', 'aman@gmail.com', 'Mumbai', 'Python', 23500);
+
+-- Display all trainees.
+SELECT * FROM trainees;
+
+-- Show only first_name, email, and stipend.
+SELECT first_name, email, stipend FROM trainees;
+
+-- Find trainees from Mumbai.
+SELECT first_name, email, stipend, city
+FROM trainees
+WHERE city = 'Mumbai';
+
+-- Find trainees whose stipend is greater than ₹22,000.
+SELECT first_name, email, stipend, city
+FROM trainees
+WHERE stipend > 22000;
+
+-- Find trainees who are not learning React.
+SELECT first_name, last_name, email, specialization 
+FROM trainees
+WHERE specialization != 'React';
+
+-- Display trainees ordered by highest stipend.
+SELECT first_name, email, stipend
+FROM trainees
+ORDER BY stipend DESC;
+
+-- Display the lowest stipend trainee.
+SELECT first_name, email, stipend
+FROM trainees
+ORDER BY stipend ASC;
+```
