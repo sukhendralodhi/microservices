@@ -330,3 +330,34 @@ SELECT MIN(stipend) AS highest_stipend FROM trainees;
 SELECT COUNT(trainee_id) AS total_trainees 
 FROM trainees;
 ```
+
+```sql
+
+INSERT INTO posts (user_id, title, status, views)
+SELECT id, 'PostgresSQL joins Explanation', 'published', 100
+FROM users
+WHERE name = 'Mohan Sharma';
+
+INSERT INTO posts (user_id, title, status, views)
+SELECT id, 'Indexes for beginers', 'draft', 40
+FROM users
+WHERE name = 'Mohan Sharma';
+
+
+
+SELECT * FROM users;
+
+INSERT INTO posts (user_id, title, status, views)
+SELECT id, 'React js for beginers', 'published', 50
+FROM users
+WHERE name = 'Deepak Gupta';
+
+
+
+INSERT INTO comments (post_id, body)
+SELECT id , 'good blog for starting journey with react js'
+FROM posts
+WHERE title = 'React js for beginers';
+
+SELECT * FROM comments;
+```
