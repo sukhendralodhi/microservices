@@ -199,3 +199,30 @@ WHERE category = 'Home Essentials';
 DELETE FROM products
 WHERE 
 ```
+
+```sql
+-- returning usually return back the rows imidietly after inser, update and delete
+INSERT INTO products 
+(name, price, stock, sku, description, category)
+VALUES
+(
+'Webcam', 
+4000, 
+11, 
+'WEB0099',
+'Web camera for laptops and pcs',
+'Electronics'
+)
+RETURNING id, name, price, sku, stock;
+
+UPDATE products
+SET price = 4056,
+	name = 'Webcamera',
+	sku = 'WEBC0099'
+WHERE sku = 'WEB0099'
+RETURNING name, price, sku;
+
+DELETE FROM products
+WHERE sku = 'WEBC0099'
+RETURNING name, price, sku;
+```
