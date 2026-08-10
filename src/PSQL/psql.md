@@ -389,4 +389,12 @@ SELECT * FROM post_tags;
 -- user.id => primary key in user table
 -- posts.user_id => foreign key in posts table 
 
+
+-- one to many relationship 
+-- one parent rows can have many child rows
+
+-- users => is your parent table
+-- posts => is your child table
+
+
 ```
