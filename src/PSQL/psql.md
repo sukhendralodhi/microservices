@@ -133,3 +133,69 @@ ORDER BY price ASC
 LIMIT 10 OFFSET 10;
 
 ```
+
+
+```sql
+
+-- update single row
+
+
+
+SELECT name, price, category
+FROM products
+ORDER BY price ASC
+LIMIT 10;
+
+SELECT name, price, category
+FROM products
+ORDER BY price ASC
+LIMIT 10 OFFSET 0;
+
+SELECT name, price, category
+FROM products
+ORDER BY price ASC
+LIMIT 10 OFFSET 10;
+
+```
+
+```sql
+-- updating column val
+SELECT name, price, sku FROM products
+WHERE sku = 'CAB002';
+
+
+UPDATE products
+SET price = 560,
+name = 'USB-C Data Cable'
+WHERE sku = 'CAB002';
+
+-- updating multiple val
+UPDATE products
+SET price = ROUND(price * 1.10, 2)
+WHERE category = 'Laptops';
+
+
+SELECT name name, price, category
+FROM products
+WHERE category = 'Laptops';
+```
+
+```sql
+-- <!-- delete data -->
+-- first insert new data 
+
+INSERT INTO products (name, price, stock, sku, description, category)
+VALUES
+
+('Coffee Mug', 280, 20, 'COFF0099', 
+'This is coffe mug for hom coffe', 'Home Essentials');
+
+-- then see the data inserted or not 
+SELECT name name, price, category
+FROM products
+WHERE category = 'Home Essentials';
+
+-- try to delete data 
+DELETE FROM products
+WHERE 
+```
