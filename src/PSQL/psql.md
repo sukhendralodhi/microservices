@@ -360,4 +360,33 @@ FROM posts
 WHERE title = 'React js for beginers';
 
 SELECT * FROM comments;
+
+INSERT INTO tags (name)
+VALUES ('sql'),
+('backend');
+
+INSERT INTO tags (name)
+VALUES ('frontend');
+
+SELECT * FROM tags;
+
+
+SELECT * FROM posts;
+
+INSERT INTO post_tags (post_id, tag_id)
+SELECT p.id, t.id
+FROM posts p, tags t
+WHERE p.title = 'React js for beginers' 
+AND t.name = 'frontend';
+
+SELECT * FROM post_tags;
+```
+
+
+```sql
+
+-- foreign key is a column that points to the primary key of another table
+-- user.id => primary key in user table
+-- posts.user_id => foreign key in posts table 
+
 ```
