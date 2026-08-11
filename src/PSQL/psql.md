@@ -540,4 +540,48 @@ ORDER BY total_posts DESC;
 - count how many uniques posts are connected to each tag
 
 
+```sql
+SELECT * FROM trainees;
+
+SELECT MAX(stipend)
+FROM trainees;
+
+SELECT *
+FROM trainees
+WHERE stipend = (
+	SELECT MAX(stipend)
+	FROM trainees
+);
+
+SELECT AVG(stipend)
+FROM trainees;
+
+SELECT *
+FROM trainees
+WHERE stipend > (
+    SELECT AVG(stipend)
+    FROM trainees
+);
+
+SELECT * FROM users
+WHERE id IN (
+	SELECT user_id FROM posts
+);
+
+SELECT user_id FROM posts;
+
+
+SELECT * FROM users
+WHERE id NOT IN (
+	SELECT user_id FROM posts
+);
+
+SELECT
+    user_id,
+    COUNT(*) AS total_posts
+FROM posts
+GROUP BY user_id;
+
+```
+
 
