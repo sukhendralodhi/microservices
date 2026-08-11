@@ -480,3 +480,45 @@ LEFT JOIN orders o
 WHERE o.order_id IS NULL;
 ```
 
+```sql
+-- many to many relationships 
+
+SELECT
+    s.name AS student,
+    c.name AS course
+FROM students AS s
+INNER JOIN student_courses AS sc
+    ON s.id = sc.student_id
+INNER JOIN courses AS c
+    ON c.id = sc.course_id;
+
+	SELECT * FROM tags;
+SELECT * FROM posts;
+
+
+SELECT 
+	posts.title AS post_title,
+	tags.name AS tag_name
+FROM posts
+INNER JOIN post_tags
+	ON posts.id = post_tags.post_id
+INNER JOIN tags
+	ON post_tags.tag_id = 
+```
+
+## Yes bro. In PostgreSQL, aliases are temporary names you give to tables or columns to make SQL queries shorter and easier to read.
+
+```sql
+SELECT
+	COUNT(*) AS total_posts,
+	COUNT(*) FILTER (WHERE status = 'published') AS published_posts,
+	SUM(views) AS total_views,
+	AVG(views) AS avg_views
+FROM posts;
+```
+
+- group by create group of rows
+- WHERE = filters normal rows before grouping
+- HAVING = filters groups after grouping
+
+
