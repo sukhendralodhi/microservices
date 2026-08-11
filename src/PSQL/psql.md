@@ -395,6 +395,31 @@ SELECT * FROM post_tags;
 
 -- users => is your parent table
 -- posts => is your child table
+SELECT * FROM posts;
 
+SELECT
+	users.name AS user_name,
+	posts.title AS post_title,
+	posts.status
+FROM users
+INNER JOIN posts
+ON users.id = posts.user_id
+ORDER BY users.name, posts.title;
 
 ```
+
+```sql
+-- inner join returns only the matching rows from both tables
+SELECT 
+	users.name AS author_name,
+	posts.title AS post_title,
+	posts.status,
+	posts.views
+FROM posts
+INNER JOIN users
+-- matching rules 
+	ON posts.user_id = users.id
+WHERE posts.status = 'published'
+ORDER BY posts.views DESC;
+```
+
