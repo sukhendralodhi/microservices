@@ -448,3 +448,35 @@ VALUES
 SELECT * FROM departments;
 ```
 
+```sql
+-- A LEFT JOIN returns all rows from the left table, plus matching rows from the right table. If there is no match, PostgreSQL puts NULL for the right-table columns.
+
+-- left join keeps all the rowsfrom the left table
+-- if the right table has matching data then postgresSQL going to include that
+-- if dont have any matching data it returns null 
+-- post table = left table
+-- comments table = right table
+
+-- because not every posts is going have comments
+-- some posts will have 100 comments and some will have 0
+
+
+SELECT 
+	c.name,
+	o.product
+FROM customers AS c
+LEFT JOIN orders AS o
+ON c.customer_id = o.customer_id;
+
+SELECT c.name, o.product
+FROM customers c
+INNER JOIN orders o
+    ON c.customer_id = o.customer_id;
+
+	SELECT c.name
+FROM customers c
+LEFT JOIN orders o
+    ON c.customer_id = o.customer_id
+WHERE o.order_id IS NULL;
+```
+
