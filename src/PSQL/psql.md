@@ -421,5 +421,30 @@ INNER JOIN users
 	ON posts.user_id = users.id
 WHERE posts.status = 'published'
 ORDER BY posts.views DESC;
+
+SELECT * FROM employees;
+
+INSERT INTO employees (name)
+VALUES ('Sanju'), ('Mohan'), ('Gopal');
+SELECT * FROM employees;
+
+CREATE TABLE employees (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(50)
+);
+
+CREATE TABLE departments(
+	department_id SERIAL PRIMARY KEY,
+	employee_id INT NOT NULL REFERENCES employees(id),
+	department VARCHAR(100) NOT NULL
+);
+
+INSERT INTO departments (employee_id, department)
+VALUES
+    (1, 'IT'),
+    (2, 'HR'),
+    (3, 'Finance');
+
+SELECT * FROM departments;
 ```
 
