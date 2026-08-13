@@ -751,3 +751,13 @@ ON employees(name);
 7. EXPLAIN again
        ↓
 8. Compare query plans
+
+## transactions
+- multiple sql statements run as one safe unit
+
+ex ecommerce website
+- placing an order
+- reduce stock of that product
+- creating payment records
+- transfering money
+- creating user records with related profile data 
