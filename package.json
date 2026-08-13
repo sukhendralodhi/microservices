@@ -5,17 +5,7 @@
   "main": "index.js",
   "types": "module",
   "scripts": {
-    "build": "tsc",
-    "01": "tsx src/01-process.objects.ts",
-    "02": "tsx src/02-crypto-module.ts",
-    "03": "tsx src/03-os-module.ts",
-    "04": "tsx src/04-path-module.ts",
-    "05": "tsx src/05-timers-module.ts",
-    "06": "tsx src/basics.ts",
-    "07": "tsx src/06-callback-promises-async-await.ts",
-    "08": "tsx src/08-promises-async-await.ts",
-    "09": "tsx src/09-async-await.ts",
-    "11": "tsx src/ 10-file-system.ts"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
