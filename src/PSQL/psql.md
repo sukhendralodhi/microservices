@@ -652,3 +652,102 @@ ON posts(user_id);
 
 ```
 
+## What is an Index?
+An index is a database data structure that helps PostgreSQL find rows faster without scanning the entire table.
+
+GOOD FOR
+=
+>
+>=
+<
+<=
+BETWEEN
+ORDER BY
+
+```sql
+
+CREATE TABLE employees(
+	id SERIAL PRIMARY KEY,
+	name TEXT NOT NULL,
+	department TEXT NOT NULL,
+	salary INTEGER NOT NULL,
+	city TEXT NOT NULL
+);
+
+INSERT INTO employees (
+	name, department, salary, city
+)
+VALUES
+('Mohan Sharma', 'IT', 60000, 'Bhopal'),
+    ('Rahul Singh', 'HR', 45000, 'Delhi'),
+    ('Sukhendra Lodhi', 'IT', 75000, 'Bhopal'),
+    ('Amit Verma', 'Finance', 55000, 'Indore'),
+    ('Priya Sharma', 'IT', 80000, 'Delhi'),
+    ('Neha Gupta', 'HR', 50000, 'Bhopal'),
+    ('Ravi Kumar', 'Finance', 65000, 'Delhi'),
+    ('Ankit Jain', 'IT', 70000, 'Indore');
+
+	SELECT * FROM employees
+
+
+	INSERT INTO employees (name, department, salary, city)
+SELECT
+    'Employee ' || generate_series,
+    CASE
+        WHEN generate_series % 3 = 0 THEN 'IT'
+        WHEN generate_series % 3 = 1 THEN 'HR'
+        ELSE 'Finance'
+    END,
+    30000 + (generate_series % 70000),
+    CASE
+        WHEN generate_series % 3 = 0 THEN 'Bhopal'
+        WHEN generate_series % 3 = 1 THEN 'Delhi'
+        ELSE 'Indore'
+    END
+FROM generate_series(1, 100000);
+
+CREATE INDEX IF NOT EXISTS
+idx_employees_city
+ON employees(city);
+
+EXPLAIN
+SELECT * FROM employees
+WHERE city = 'Bhopal';
+
+
+SELECT *
+FROM employees
+WHERE department = 'IT';
+
+CREATE INDEX IF NOT EXISTS
+idx_employees_department
+ON employees(department);
+
+EXPLAIN ANALYZE
+SELECT *
+FROM employees
+WHERE department = 'IT';
+
+EXPLAIN ANALYZE
+SELECT *
+FROM employees
+WHERE name = 'Employee 50000';
+
+CREATE INDEX IF NOT EXISTS idx_employees_name
+ON employees(name);
+```
+1. Create table
+       ↓
+2. Insert data
+       ↓
+3. Write query
+       ↓
+4. EXPLAIN query
+       ↓
+5. See Seq Scan
+       ↓
+6. Create index
+       ↓
+7. EXPLAIN again
+       ↓
+8. Compare query plans
