@@ -1,5 +1,7 @@
+import fs from "node:fs";
 import path from "node:path";
 import { pool } from "../lib/db";
+import { logger } from "../lib/logger";
 
 
 const MIGRATIONS_DIR = path.join(process.cwd(), 'migrations');
@@ -26,7 +28,47 @@ async function getExecutedMigrations(): Promise<string[]> {
     return result.rows.map((row: MigrationRow) => row.name);
 }
 
+function getMigrationsFiles(): string[] {
+    return fs.readdirSync(MIGRATIONS_DIR).filter((file) => file.endsWith(".sql")).sort();
+
+}
+
+async function runMigration(fileName: string): Promise<void> {
+    const sql = fs.readFileSync(path.join(MIGRATIONS_DIR, fileName), "utf-8");
+    const client = await pool.connect();
+
+    try {
+        await client.query('BEGIN');
+        await client.query(sql);
+        await client.query('INSERT INTO migrations (name) values ($1)', [fileName]);
+        await client.query('COMMIT');
+
+        logger.info(`Migrations completed: ${fileName}`);
+    } catch (error) {
+        await client.query('ROLLBACK');
+        throw error;
+    } finally {
+        client.release();
+    }
+}
+
 async function migrate(): Promise<void> {
     await pool.query(CREATE_MIGRATIONS_TABLE_SQL);
-    const executed = new Set(await getExecutedMigrations())
+    const executed = new Set(await getExecutedMigrations());
+    const pending = getMigrationsFiles().filter((file) => !executed.has(file));
+
+    if (pending.length === 0) {
+        logger.info("No pending migrations")
+    }
+
+    for (const fileName of pending) {
+        await runMigration(fileName);
+    }
+
+    logger.info("All migrations completed.");
 }
+
+migrate().catch((err) => {
+    logger.error({ err: err }, 'Migrations failed.');
+    process.exit(1);
+}).finally(() => pool.end());
