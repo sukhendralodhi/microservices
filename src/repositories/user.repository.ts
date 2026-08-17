@@ -1,5 +1,5 @@
 import { pool } from "../lib/db";
-import { DBUserRow, User } from "../types/user";
+import { DBUserRow, DBUserRowWithPasswordRow, User } from "../types/user";
 
 // find user by email 
 export async function findUserByEmail(email: string): Promise<User | null> {
@@ -23,4 +23,15 @@ export async function createUser(email: string, passwordHash: string): Promise<U
     );
 
     return result.rows[0];
+}
+
+export async function findUserByEmailWithPassword(email: string): Promise<DBUserRowWithPasswordRow | null> {
+    const result = await pool.query<DBUserRowWithPasswordRow>(
+        `
+        SELECT id, email, password_hash, created_at FROM users
+        WHERE email = $1
+        `,
+        [email]
+    );
+    return result.rows[0] ?? null;
 }

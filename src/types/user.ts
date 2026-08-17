@@ -15,3 +15,9 @@ export type DBUserRow = {
 export type DBUserRowWithPasswordRow = DBUserRow & {
     password_hash: string | null;
 };
+
+export type TokenPayload = {
+    userId: string;
+    email: string;
+    role: string;
+};
