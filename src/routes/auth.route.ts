@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authenticate } from "../middlewares/auth.middleware";
 import { loginUser, registerUser } from "../services/auth.service";
 
 
@@ -39,6 +40,18 @@ authRouter.post("/login", async (req, res, next) => {
             success: true,
             data: { accessToken },
             "message": "Login successfull!"
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
+authRouter.get("/me", authenticate, async (req, res, next) => {
+    try {
+        res.status(200).json({
+            success: true,
+            message: "User fetched successfully!",
+            data: req.user
         });
     } catch (error) {
         next(error);

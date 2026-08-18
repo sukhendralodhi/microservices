@@ -9,3 +9,7 @@ export function signAccessToken(payload: TokenPayload): string {
 
     return jwt.sign(payload, env.jwtSecret, options);
 }
+
+export function verifyAccessToken(token: string): TokenPayload {
+    return jwt.verify(token, env.jwtSecret) as TokenPayload;
+}
