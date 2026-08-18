@@ -26,6 +26,15 @@ authRouter.post("/login", async (req, res, next) => {
 
         const { accessToken } = await loginUser(email, password);
 
+        // commented for now 
+
+        // res.cookie("accessToken", accessToken, {
+        //     httpOnly: true,
+        //     secure: env.nodeEnv === "production",
+        //     sameSite: 'strict',
+        //     maxAge: Number(env.jwtTokenMaxAge)
+        // });
+
         res.status(200).json({
             success: true,
             data: { accessToken },
