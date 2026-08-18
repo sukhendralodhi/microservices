@@ -53,6 +53,8 @@ export async function loginUser(email: string, password: string): Promise<{ acce
         role: user.role
     });
 
+
+
     return { accessToken };
 
 }

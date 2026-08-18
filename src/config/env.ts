@@ -19,5 +19,6 @@ export const env = {
     logLevel: process.env.LOG_LEVEL ?? "info",
     databaseUrl: checkRequiredEnvVariables("DATABASE_URL"),
     jwtSecret: checkRequiredEnvVariables("JWT_SECRET"),
-    jwtExpiresIn: checkRequiredEnvVariables("JWT_EXPIRES_IN")
+    jwtExpiresIn: checkRequiredEnvVariables("JWT_EXPIRES_IN"),
+    jwtTokenMaxAge: checkRequiredEnvVariables("JWT_TOKEN_MAX_AGE")
 } as const;

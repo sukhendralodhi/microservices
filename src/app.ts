@@ -1,5 +1,6 @@
 // entry file for express 
 // express related logic 
+import cookieParser from "cookie-parser";
 import cors from 'cors';
 import express from "express";
 import { errorHandler } from "./middlewares/errorHandler";
@@ -12,6 +13,7 @@ export function createApp() {
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
+    app.use(cookieParser());
 
     app.use("/api", apiRouter);
 
