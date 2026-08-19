@@ -1,6 +1,6 @@
 import { TITLE_MAX_CHARACTER } from "../constants/constant";
 import { AppError } from "../errors/AppError";
-import { createTask, getById, getTask, updateTaskTitle } from "../repositories/user.task.repository";
+import { createTask, deleteTaskById, getById, getTask, updateTaskTitle } from "../repositories/user.task.repository";
 import { Task, TaskFilters, TaskListResponse } from "../types/task";
 
 
@@ -41,6 +41,14 @@ export async function updateUserTask(
 ): Promise<Task> {
     const validTitle = validateTitle(title);
     const task = await updateTaskTitle(taskId, userId, validTitle);
+    if (!task) {
+        throw new AppError(404, "Task is found!");
+    }
+    return task;
+}
+
+export async function deleteUserTask(taskId: string, userId: string): Promise<Task | null> {
+    const task = await deleteTaskById(taskId, userId);
     if (!task) {
         throw new AppError(404, "Task is found!");
     }

@@ -2,7 +2,7 @@ import { Router } from "express";
 import { validate as isUUID } from "uuid";
 import { AppError } from "../errors/AppError";
 import { authenticate } from "../middlewares/auth.middleware";
-import { createUserTask, getAllTask, getTaskById, updateUserTask } from "../services/user.task.service";
+import { createUserTask, deleteUserTask, getAllTask, getTaskById, updateUserTask } from "../services/user.task.service";
 import { TaskStatus } from "../types/task";
 
 export const userTaskRouter = Router();
@@ -140,5 +140,30 @@ userTaskRouter.patch("/:taskId", async (req, res, next) => {
         });
     } catch (error) {
         next(error)
+    }
+});
+
+userTaskRouter.delete("/:taskId", async (req, res, next) => {
+    try {
+        const taskId = req.params.taskId;
+
+        if (!isUUID(taskId)) {
+            throw new AppError(400, "Invalid task ID");
+        }
+
+        if (!req.user) {
+            throw new AppError(401, "Authentication required");
+        }
+
+        const task = await deleteUserTask(taskId, req.user.userId);
+
+        res.status(200).json({
+            success: true,
+            message: "Task deleted successfully!",
+            data: task
+        });
+
+    } catch (error) {
+        next(error);
     }
 });
