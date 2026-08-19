@@ -3,6 +3,7 @@ import { validate as isUUID } from "uuid";
 import { AppError } from "../errors/AppError";
 import { authenticate } from "../middlewares/auth.middleware";
 import { createUserTask, getAllTask, getTaskById } from "../services/user.task.service";
+import { TaskStatus } from "../types/task";
 
 export const userTaskRouter = Router();
 
@@ -42,7 +43,32 @@ userTaskRouter.get("/", async (req, res, next) => {
 
         // const userId = req.user!.userId
         const userId = req.user.userId;
-        const tasks = await getAllTask(userId);
+
+        const page = Math.max(
+            Number(req.query.page) || 1, 1
+        );
+
+        const limit = Math.min(
+            Math.max(Number(req.query.limit) || 10, 1), 100
+        );
+
+        const query = typeof req.query.query === "string" ? req.query.query.trim() : undefined;
+
+        const status = typeof req.query.status === "string" ? req.query.status as TaskStatus : undefined;
+
+        const order =
+            req.query.order === "asc"
+                ? "asc"
+                : "desc";
+
+        const tasks = await getAllTask(userId, {
+            page,
+            limit,
+            query,
+            status,
+            sortBy: "created_at",
+            order,
+        });
 
         res.status(200).json({
             success: true,
