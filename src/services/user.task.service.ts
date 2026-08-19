@@ -1,6 +1,6 @@
 import { TITLE_MAX_CHARACTER } from "../constants/constant";
 import { AppError } from "../errors/AppError";
-import { createTask, getById, getTask } from "../repositories/user.task.repository";
+import { createTask, getById, getTask, updateTaskTitle } from "../repositories/user.task.repository";
 import { Task, TaskFilters, TaskListResponse } from "../types/task";
 
 
@@ -30,6 +30,19 @@ export async function getTaskById(userId: string, taskId: string): Promise<Task 
     const task = await getById(userId, taskId);
     if (!task) {
         throw new AppError(404, "Task not found")
+    }
+    return task;
+}
+
+export async function updateUserTask(
+    taskId: string,
+    userId: string,
+    title: string
+): Promise<Task> {
+    const validTitle = validateTitle(title);
+    const task = await updateTaskTitle(taskId, userId, validTitle);
+    if (!task) {
+        throw new AppError(404, "Task is found!");
     }
     return task;
 }

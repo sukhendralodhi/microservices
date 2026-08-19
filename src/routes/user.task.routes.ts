@@ -2,7 +2,7 @@ import { Router } from "express";
 import { validate as isUUID } from "uuid";
 import { AppError } from "../errors/AppError";
 import { authenticate } from "../middlewares/auth.middleware";
-import { createUserTask, getAllTask, getTaskById } from "../services/user.task.service";
+import { createUserTask, getAllTask, getTaskById, updateUserTask } from "../services/user.task.service";
 import { TaskStatus } from "../types/task";
 
 export const userTaskRouter = Router();
@@ -103,6 +103,41 @@ userTaskRouter.get("/:id", async (req, res, next) => {
             data: task
         });
 
+    } catch (error) {
+        next(error)
+    }
+});
+
+userTaskRouter.patch("/:taskId", async (req, res, next) => {
+    try {
+
+        const { taskId } = req.params;
+
+        if (!isUUID(taskId)) {
+            throw new AppError(400, "Invalid task ID");
+        }
+
+        if (!req.user) {
+            throw new AppError(401, "Authentication required");
+        }
+
+        const { title } = req.body;
+
+        if (typeof title !== "string" || !title.trim()) {
+            throw new AppError(400, "Title is required");
+        }
+
+        const task = await updateUserTask(
+            taskId,
+            req.user.userId,
+            title
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Task Updated successfully!",
+            data: task
+        });
     } catch (error) {
         next(error)
     }
