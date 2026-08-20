@@ -8,9 +8,9 @@ export const authRouter = Router();
 authRouter.post("/register", async (req, res, next) => {
     try {
 
-        const { email, password } = req.body;
+        // const { first_name, last_name, address, city, state, email, password } = req.body;
 
-        await registerUser(email, password);
+        await registerUser(req.body);
 
         res.status(201).json({
             success: true,
