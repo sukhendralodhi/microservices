@@ -1,5 +1,5 @@
 import { pool } from "../lib/db";
-import { Task, TaskFilters } from "../types/task";
+import { Task, TaskFilters, TaskStatus } from "../types/task";
 
 type TaskRow = Task;
 
@@ -165,5 +165,18 @@ export async function deleteTaskById(taskId: string, userId: string): Promise<Ta
         [taskId, userId]
     );
 
+    return result.rows[0] ?? null;
+}
+
+export async function updateStatus(status: TaskStatus, taskId: string, userId: string): Promise<Task | null> {
+    const result = await pool.query<TaskRow>(
+        `
+        UPDATE support_tasks
+        SET status = $1
+        WHERE id = $2 AND user_id = $3
+        RETURNING id, title, status, user_id, created_at, updated_at
+        `,
+        [status, taskId, userId]
+    );
     return result.rows[0] ?? null;
 }

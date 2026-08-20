@@ -1,7 +1,7 @@
-import { TITLE_MAX_CHARACTER } from "../constants/constant";
+import { TITLE_MAX_CHARACTER, VALID_STATUSES } from "../constants/constant";
 import { AppError } from "../errors/AppError";
-import { createTask, deleteTaskById, getById, getTask, updateTaskTitle } from "../repositories/user.task.repository";
-import { Task, TaskFilters, TaskListResponse } from "../types/task";
+import { createTask, deleteTaskById, getById, getTask, updateStatus, updateTaskTitle } from "../repositories/user.task.repository";
+import { Task, TaskFilters, TaskListResponse, TaskStatus } from "../types/task";
 
 
 function validateTitle(title: unknown): string {
@@ -15,6 +15,16 @@ function validateTitle(title: unknown): string {
     }
 
     return trimmedTitle;
+}
+
+export function validateTaskStatus(
+    status: string
+): TaskStatus {
+    if (!VALID_STATUSES.includes(status as TaskStatus)) {
+        throw new AppError(400, "Invalid task status");
+    }
+
+    return status as TaskStatus;
 }
 
 export async function createUserTask(title: unknown, userId: string): Promise<Task> {
@@ -38,7 +48,7 @@ export async function updateUserTask(
     taskId: string,
     userId: string,
     title: string
-): Promise<Task> {
+): Promise<Task | null> {
     const validTitle = validateTitle(title);
     const task = await updateTaskTitle(taskId, userId, validTitle);
     if (!task) {
@@ -49,6 +59,16 @@ export async function updateUserTask(
 
 export async function deleteUserTask(taskId: string, userId: string): Promise<Task | null> {
     const task = await deleteTaskById(taskId, userId);
+    if (!task) {
+        throw new AppError(404, "Task is found!");
+    }
+    return task;
+}
+
+export async function updateTaskStatus(status: TaskStatus, taskId: string, userId: string): Promise<Task | null> {
+    const validStatus = validateTaskStatus(status)
+    const task = await updateStatus(validStatus, taskId, userId);
+
     if (!task) {
         throw new AppError(404, "Task is found!");
     }
