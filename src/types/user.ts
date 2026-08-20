@@ -21,3 +21,24 @@ export type TokenPayload = {
     email: string;
     role: string;
 };
+
+
+export type RegisterUserInput = {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    address: string;
+    city: string;
+    state: string;
+}
+
+export type CreateUserInput = {
+    email: string;
+    passwordHash: string;
+    first_name: string;
+    last_name: string;
+    address: string | null;
+    city: string | null;
+    state: string | null;
+};
