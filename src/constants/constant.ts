@@ -8,3 +8,10 @@ export const VALID_STATUSES: TaskStatus[] = [
     "IN_PROGRESS",
     "RESOLVED",
 ];
+
+export const ALLOWED_SORT_FIELDS = [
+    "title",
+    "status",
+    "created_at",
+    "updated_at"
+] as const;

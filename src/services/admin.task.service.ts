@@ -1,4 +1,4 @@
-import { VALID_STATUSES } from "../constants/constant";
+import { ALLOWED_SORT_FIELDS, VALID_STATUSES } from "../constants/constant";
 import { AppError } from "../errors/AppError";
 import { findAllTasks } from "../repositories/admin.task.repository";
 import { Task } from "../types/task";
@@ -6,6 +6,8 @@ import { Task } from "../types/task";
 type AdminTaskListQuery = {
     search?: string;
     status?: string;
+    sortBy?: string;
+    sortOrder?: "asc" | "desc";
 }
 
 type AdminTaskListResponse = {
@@ -13,6 +15,7 @@ type AdminTaskListResponse = {
 }
 
 type TaskStatus = (typeof VALID_STATUSES)[number]
+type SortField = (typeof ALLOWED_SORT_FIELDS)[number];
 
 export async function getAdminTasks(
     query: AdminTaskListQuery
@@ -27,9 +30,22 @@ export async function getAdminTasks(
         );
     }
 
+    // sorting 
+    const sortBy = query.sortBy?.trim() || "created_at";
+    const sortOrder = query.sortOrder?.toUpperCase() === "ASC" ? "ASC" : "DESC";
+
+    if (!ALLOWED_SORT_FIELDS.includes(sortBy as SortField)) {
+        throw new AppError(
+            400,
+            "Invalid sort field"
+        );
+    }
+
     const tasks = await findAllTasks({
         search,
-        status
+        status,
+        sortBy,
+        sortOrder
     });
 
     return {
