@@ -2,7 +2,7 @@ import { Request, Router } from "express";
 import { AppError } from "../errors/AppError";
 import { requiredAdmin } from "../middlewares/admin.middleware";
 import { authenticate } from "../middlewares/auth.middleware";
-import { deleteUser, getAllUsers, getAllUserTasks } from "../services/admin.service";
+import { deleteUser, getAllUsers } from "../services/admin.service";
 
 
 export const adminRouter = Router()
@@ -40,16 +40,16 @@ adminRouter.delete("/users/:id", authenticate, requiredAdmin, async (req: Reques
 });
 
 // get all the users task 
-adminRouter.get("/tasks", authenticate, requiredAdmin, async (_req, res, next) => {
-    try {
-        const tasks = await getAllUserTasks();
-        res.status(200).json({
-            success: true,
-            message: "All tasks found",
-            data: tasks
-        });
-    } catch (error) {
-        next(error)
-    }
-});
+// adminRouter.get("/tasks", authenticate, requiredAdmin, async (_req, res, next) => {
+//     try {
+//         const tasks = await getAllUserTasks();
+//         res.status(200).json({
+//             success: true,
+//             message: "All tasks found",
+//             data: tasks
+//         });
+//     } catch (error) {
+//         next(error)
+//     }
+// });
 

@@ -24,7 +24,7 @@ export async function findAllTasks(
 
     if (filters.status) {
         conditions.push(`status = $${paramIndex}`);
-        values.push(filters.status);
+        values.push(filters.status.toUpperCase());
     }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
