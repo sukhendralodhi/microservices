@@ -12,4 +12,4 @@ apiRouter.use(healthRouter);
 apiRouter.use("/auth", authRouter);
 apiRouter.use("/admin", adminRouter);
 apiRouter.use("/tasks", userTaskRouter);
-apiRouter.use("/admin/taska", adminTaskRouter);
+apiRouter.use("/admin/tasks", adminTaskRouter);

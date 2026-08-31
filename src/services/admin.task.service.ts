@@ -18,10 +18,13 @@ export async function getAdminTasks(
     query: AdminTaskListQuery
 ): Promise<AdminTaskListResponse> {
     const search = query.search?.trim() || undefined;
-    const status = query.search?.trim() || undefined;
+    const status = query.status?.trim().toUpperCase() || undefined;
 
-    if (status && VALID_STATUSES.includes(status as TaskStatus)) {
-        throw new AppError(400, "status must be between open, inprogress or resolved");
+    if (status && !VALID_STATUSES.includes(status as TaskStatus)) {
+        throw new AppError(
+            400,
+            "status must be between OPEN, IN_PROGRESS or RESOLVED"
+        );
     }
 
     const tasks = await findAllTasks({

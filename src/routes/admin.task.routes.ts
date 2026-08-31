@@ -11,11 +11,11 @@ adminTaskRouter.use(authenticate, requiredAdmin);
 adminTaskRouter.get("/", async function (req, res, next) {
     try {
         const data = await getAdminTasks(req.query);
-        return res.status(200).json({
+        res.status(200).json({
             message: "All the task fetched!",
             success: true,
             data: data
-        })
+        });
     } catch (error) {
         next(error)
     }
