@@ -1,5 +1,7 @@
-import { handleProducts } from "../repositories/products.repository";
-import { GetProductsResponse, ProductQueryList } from "../types/products";
+import { UUID_REGEX } from "../constants/constant";
+import { AppError } from "../errors/AppError";
+import { handleProducts, handleProductsById } from "../repositories/products.repository";
+import { GetProductsResponse, Product, ProductQueryList } from "../types/products";
 
 
 export async function handeGetProducts(
@@ -19,4 +21,25 @@ export async function handeGetProducts(
         products
     }
 
+}
+
+export async function handleGetProduct(
+    pId: string
+): Promise<Product | null> {
+
+    if (!pId) {
+        throw new AppError(400, "Product id is required");
+    }
+
+    if (!UUID_REGEX.test(pId)) {
+        throw new AppError(400, "Invalid product id");
+    }
+
+    const product = await handleProductsById(pId);
+
+    if (!product) {
+        throw new AppError(404, "Product not found");
+    }
+
+    return product;
 }

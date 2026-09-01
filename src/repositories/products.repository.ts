@@ -53,3 +53,24 @@ export async function handleProducts(
 
     return results.rows
 }
+
+export async function handleProductsById(pId: string): Promise<Product> {
+    const results = await pool.query<ProductRow>(
+
+        `
+        SELECT id,
+            name,
+            description,
+            price,
+            category,
+            stock,
+            created_at,
+            updated_at
+        FROM products
+        WHERE id = $1
+        `,
+        [pId]
+    );
+
+    return results.rows[0] ?? null
+}
