@@ -10,8 +10,9 @@ import { apiRouter } from './routes';
 
 export function createApp() {
     const app = express();
-
+    app.disable("etag");
     redisClient.connect();
+
 
     app.use(cors());
     app.use(express.json());

@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { authenticate } from "../middlewares/auth.middleware";
+// import { authenticate } from "../middlewares/auth.middleware";
 import { handeGetProducts, handleGetProduct, handleProductUpdate } from "../services/product.service";
 
 
 export const productRouter = Router();
 
-productRouter.use(authenticate);
+// productRouter.use(authenticate);
 
 productRouter.get("/", async function (req, res, next) {
     try {
