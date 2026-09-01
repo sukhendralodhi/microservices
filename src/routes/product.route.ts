@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authenticate } from "../middlewares/auth.middleware";
-import { handeGetProducts, handleGetProduct } from "../services/product.service";
+import { handeGetProducts, handleGetProduct, handleProductUpdate } from "../services/product.service";
 
 
 export const productRouter = Router();
@@ -35,6 +35,22 @@ productRouter.get("/:id", async function (req, res, next) {
             data: product
         });
 
+    } catch (error) {
+        next(error);
+    }
+});
+
+productRouter.put("/:id", async function (req, res, next) {
+    try {
+        const pId = req.params.id;
+        const data = req.body;
+        const product = await handleProductUpdate(pId, data);
+
+        res.status(200).json({
+            success: true,
+            message: "Product updated successfully",
+            data: product,
+        });
     } catch (error) {
         next(error);
     }

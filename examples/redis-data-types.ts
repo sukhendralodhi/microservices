@@ -78,6 +78,10 @@ async function run() {
     // getting 1 item randomly from set 
     const randomVal = await redis.sRandMember(setkey);
     console.log(randomVal);
+
+    // getting item random  by passing a count
+    const randomValCount = await redis.sRandMemberCount(setkey, 3);
+    console.log(randomValCount);
 }
 
 run().catch((error) => {
