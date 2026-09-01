@@ -4,6 +4,7 @@ import { adminRouter } from "./admin.route";
 import { adminTaskRouter } from "./admin.task.routes";
 import { authRouter } from "./auth.route";
 import { healthRouter } from "./health.routes";
+import { productRouter } from "./product.route";
 import { userTaskRouter } from "./user.task.routes";
 
 export const apiRouter = Router();
@@ -13,3 +14,4 @@ apiRouter.use("/auth", authRouter);
 apiRouter.use("/admin", adminRouter);
 apiRouter.use("/tasks", userTaskRouter);
 apiRouter.use("/admin/tasks", adminTaskRouter);
+apiRouter.use("/products", productRouter)
