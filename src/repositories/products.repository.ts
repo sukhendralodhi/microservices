@@ -1,5 +1,5 @@
 import { pool } from "../lib/db";
-import { Product } from "../types/products";
+import { Product, UpdateProductInput } from "../types/products";
 
 type ProductRow = Product;
 
@@ -70,6 +70,26 @@ export async function handleProductsById(pId: string): Promise<Product> {
         WHERE id = $1
         `,
         [pId]
+    );
+
+    return results.rows[0] ?? null
+}
+
+export async function HandleUpdateProductById(pId: string, data: UpdateProductInput): Promise<Product | null> {
+    const { name, description, price, stock } = data;
+    const results = await pool.query<ProductRow>(
+        `
+        UPDATE products
+        SET 
+            name = COALESCE($1, name),
+            description = COALESCE($2, description),
+            price = COALESCE($3, price),
+            stock = COALESCE($4, stock),
+            updated_at = NOW()
+        WHERE id = $5
+        RETURNING id, name, description, category, price, stock, created_at, updated_at
+        `,
+        [name, description, price, stock, pId]
     );
 
     return results.rows[0] ?? null

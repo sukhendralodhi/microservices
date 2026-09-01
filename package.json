@@ -8,7 +8,8 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "migrate": "tsx src/scripts/migrate.ts"
+    "migrate": "tsx src/scripts/migrate.ts",
+    "example:redis-data-types": "tsx examples/redis-data-types.ts"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +31,7 @@
   "dependencies": {
     "@types/cors": "^2.8.19",
     "@types/pg": "^8.21.0",
+    "@types/redis": "^4.0.10",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -39,6 +41,7 @@
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.0",
     "pino": "^10.3.1",
+    "redis": "^6.2.1",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1",
     "uuid": "^14.0.1"

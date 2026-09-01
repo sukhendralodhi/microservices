@@ -62,3 +62,4 @@ export async function findUserByEmailWithPassword(email: string): Promise<DBUser
     );
     return result.rows[0] ?? null;
 }
+
