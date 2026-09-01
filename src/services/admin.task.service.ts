@@ -1,6 +1,6 @@
 import { ALLOWED_SORT_FIELDS, VALID_STATUSES } from "../constants/constant";
 import { AppError } from "../errors/AppError";
-import { findAllTasks } from "../repositories/admin.task.repository";
+import { findAllTasks, handleUpdateTaskAdmin } from "../repositories/admin.task.repository";
 import { Task } from "../types/task";
 
 type AdminTaskListQuery = {
@@ -51,5 +51,37 @@ export async function getAdminTasks(
     return {
         tasks
     }
+
+}
+
+export async function handleUpdateTask(taskId: string, taskStatus: string): Promise<Task | null> {
+
+    if (!taskId) {
+        throw new AppError(400, "Task id is required");
+    }
+
+    if (!taskStatus) {
+        throw new AppError(400, "Status is required");
+    }
+
+    const normalizedStatus = taskStatus.trim().toUpperCase();
+
+    if (!VALID_STATUSES.includes(normalizedStatus as TaskStatus)) {
+        throw new AppError(
+            400,
+            "Status must be OPEN, IN_PROGRESS or RESOLVED"
+        );
+    }
+
+    const updatedTask = await handleUpdateTaskAdmin(
+        taskId,
+        normalizedStatus
+    );
+
+    if (!updatedTask) {
+        throw new AppError(404, "Task is not found!");
+    }
+
+    return updatedTask;
 
 }
