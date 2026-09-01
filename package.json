@@ -8,7 +8,8 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "migrate": "tsx src/scripts/migrate.ts"
+    "migrate": "tsx src/scripts/migrate.ts",
+    "example:redis-data-types": "tsx examples/redis-data-types.ts"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +40,7 @@
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.0",
     "pino": "^10.3.1",
+    "redis": "^6.2.1",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1",
     "uuid": "^14.0.1"

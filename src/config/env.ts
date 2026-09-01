@@ -20,5 +20,6 @@ export const env = {
     databaseUrl: checkRequiredEnvVariables("DATABASE_URL"),
     jwtSecret: checkRequiredEnvVariables("JWT_SECRET"),
     jwtExpiresIn: checkRequiredEnvVariables("JWT_EXPIRES_IN"),
-    jwtTokenMaxAge: checkRequiredEnvVariables("JWT_TOKEN_MAX_AGE")
+    jwtTokenMaxAge: checkRequiredEnvVariables("JWT_TOKEN_MAX_AGE"),
+    redisUrl: checkRequiredEnvVariables("REDIS_URL")
 } as const;
