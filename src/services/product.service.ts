@@ -1,8 +1,11 @@
 import redisClient from "../config/redis";
 import { PRODUCT_CACHE_TTL, UUID_REGEX } from "../constants/constant";
 import { AppError } from "../errors/AppError";
-import { handleProducts, handleProductsById, HandleUpdateProductById } from "../repositories/products.repository";
-import { GetProductsResponse, Product, ProductQueryList, UpdateProductInput } from "../types/products";
+import { handleAddNewProduct, handleGetProductByName, handleProducts, handleProductsById, HandleUpdateProductById } from "../repositories/products.repository";
+import { AddProductInput, GetProductsResponse, Product, ProductQueryList, UpdateProductInput } from "../types/products";
+import { formatProductName } from "../utils/product-validation/formatProductName";
+import { validateProductInput } from "../utils/product-validation/validateProductInput";
+import { invalidateProductsCache } from "./productCache.service";
 
 
 export async function handeGetProducts(
@@ -39,6 +42,38 @@ export async function handeGetProducts(
     return {
         products
     }
+
+}
+
+export async function handleCreateproduct(
+    data: AddProductInput
+): Promise<Product> {
+
+
+    if (!data || Object.keys(data).length === 0) {
+        throw new AppError(400, "Product data is required");
+    }
+
+    validateProductInput(data);
+
+    const formattedName = formatProductName(data.name);
+
+    const existingProduct = await handleGetProductByName(data.name);
+
+    if (existingProduct) {
+        throw new AppError(
+            409,
+            "Product with this name already exists"
+        );
+    }
+
+    const product = await handleAddNewProduct({
+        ...data, name: formattedName
+    });
+
+    await invalidateProductsCache();
+
+    return product;
 
 }
 

@@ -9,6 +9,14 @@ export type Product = {
     updated_at: Date;
 };
 
+export type AddProductInput = {
+    name: string;
+    description: string;
+    price: number;
+    category: string;
+    stock: number;
+}
+
 
 export type UpdateProductInput = {
     name?: string;

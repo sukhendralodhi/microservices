@@ -1,6 +1,6 @@
 import { Router } from "express";
 // import { authenticate } from "../middlewares/auth.middleware";
-import { getProductViews, handeGetProducts, handleGetProduct, handleProductUpdate } from "../services/product.service";
+import { getProductViews, handeGetProducts, handleCreateproduct, handleGetProduct, handleProductUpdate } from "../services/product.service";
 
 
 export const productRouter = Router();
@@ -20,6 +20,23 @@ productRouter.get("/", async function (req, res, next) {
         });
     } catch (error) {
         next(error)
+    }
+});
+
+productRouter.post("/", async function (req, res, next) {
+    try {
+        const data = req.body;
+
+        const product = await handleCreateproduct(data);
+
+        res.status(201).json({
+            message: "Product added",
+            success: true,
+            data: product
+        });
+
+    } catch (error) {
+        next(error);
     }
 });
 
