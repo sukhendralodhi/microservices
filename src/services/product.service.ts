@@ -5,7 +5,7 @@ import { handleAddNewProduct, handleGetProductByName, handleProducts, handleProd
 import { AddProductInput, GetProductsResponse, Product, ProductQueryList, UpdateProductInput } from "../types/products";
 import { formatProductName } from "../utils/product-validation/formatProductName";
 import { validateProductInput } from "../utils/product-validation/validateProductInput";
-import { invalidateProductsCache } from "./productCache.service";
+import { invalidateProductsCache, invalidateProductsCacheById } from "./productCache.service";
 
 
 export async function handeGetProducts(
@@ -141,14 +141,17 @@ export async function handleProductUpdate(pId: string, data: UpdateProductInput)
     }
 
     // if check if that product exist in redis 
-    const chacheKey = `product:${pId}`;
+    // const chacheKey = `product:${pId}`;
 
     try {
-        await redisClient.del(chacheKey);
+        // await redisClient.del(chacheKey);
+        await invalidateProductsCacheById(pId);
         console.log("Cache invalidated");
     } catch (error) {
         console.error("Failed to invalidate Redis cache:", error);
     }
+
+    await invalidateProductsCache();
 
     return product;
 }
