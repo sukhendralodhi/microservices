@@ -9,14 +9,32 @@ export async function handeGetProducts(
     query: ProductQueryList
 ): Promise<GetProductsResponse> {
 
+
+
     const search = query.search?.trim() || undefined;
     const category = query.category?.trim() || undefined;
+
     // console.log("search", search)
     const normalizedCategory = category ? category.charAt(0).toUpperCase() + category.slice(1) : undefined;
+
+
+    const productsCacheKey = `products:search:${search ?? "all"}:category:${normalizedCategory ?? "all"}`;
+
+    const cachedProducts = await redisClient.get(productsCacheKey);
+
+    if (cachedProducts) {
+        console.log("cached hit");
+        return JSON.parse(cachedProducts!) as GetProductsResponse
+    }
+
+    console.log("cache miss");
 
     const products = await handleProducts(
         { search, category: normalizedCategory }
     );
+
+    await redisClient.setEx(productsCacheKey, PRODUCT_CACHE_TTL, JSON.stringify({ products }));
+    console.log("Cache set");
 
     return {
         products
@@ -28,43 +46,45 @@ export async function handleGetProduct(
     pId: string
 ): Promise<Product | null> {
 
-
-
     if (!pId) {
         throw new AppError(400, "Product id is required");
     }
 
+    if (!UUID_REGEX.test(pId)) {
+        throw new AppError(400, "Invalid product id");
+    }
     // create product key 
     const cacheKey = `product:${pId}`;
+    const viewsKey = `product:${pId}:views`;
+
+    let product: Product | null
 
     // check redis if product is there 
     const cachedProduct = await redisClient.get(cacheKey);
 
     // If found in cache, return it
     if (cachedProduct) {
+
         console.log("Cache HIT");
+
         return JSON.parse(cachedProduct) as Product;
-    }
 
-    console.log("Cache MISS");
+    } else {
+        console.log("Cache MISS");
+        product = await handleProductsById(pId)
+        if (!product) {
+            throw new AppError(404, "Product not found");
 
-    if (!UUID_REGEX.test(pId)) {
-        throw new AppError(400, "Invalid product id");
-    }
-
-    const product = await handleProductsById(pId);
-
-    if (!product) {
-        throw new AppError(404, "Product not found");
-    }
-
-    await redisClient.set(
-        cacheKey,
-        JSON.stringify(product),
-        {
-            EX: PRODUCT_CACHE_TTL
         }
-    )
+        await redisClient.setEx(
+            cacheKey,
+            PRODUCT_CACHE_TTL,
+            JSON.stringify(product),
+        );
+        console.log("Cache SET");
+    }
+
+    await redisClient.incr(viewsKey);
 
     return product;
 }
@@ -96,4 +116,14 @@ export async function handleProductUpdate(pId: string, data: UpdateProductInput)
     }
 
     return product;
+}
+
+export async function getProductViews(id: string): Promise<number> {
+    const views = await redisClient.get(`product:${id}:views`);
+
+    if (!views) {
+        return 0;
+    }
+
+    return Number(views);
 }
