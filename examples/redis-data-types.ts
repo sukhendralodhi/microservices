@@ -82,6 +82,16 @@ async function run() {
     // getting item random  by passing a count
     const randomValCount = await redis.sRandMemberCount(setkey, 3);
     console.log(randomValCount);
+
+    const rankKey = "demo:leaderboard";
+    await redis.zAdd(rankKey, { score: 100, value: "player_a" });
+    await redis.zAdd(rankKey, { score: 200, value: "player_b" });
+
+    const newScore = await redis.zIncrBy(rankKey, 50, "player_a");
+    console.log(newScore);
+
+    const rank = await redis.zRevRank(rankKey, "player_b");
+    console.log(rank);
 }
 
 run().catch((error) => {

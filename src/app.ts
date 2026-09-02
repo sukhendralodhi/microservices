@@ -3,7 +3,6 @@
 import cookieParser from "cookie-parser";
 import cors from 'cors';
 import express from "express";
-import redisClient from "./config/redis";
 import { errorHandler } from "./middlewares/errorHandler";
 import { notFound } from "./middlewares/notFound";
 import { apiRouter } from './routes';
@@ -11,7 +10,6 @@ import { apiRouter } from './routes';
 export function createApp() {
     const app = express();
     app.disable("etag");
-    redisClient.connect();
 
 
     app.use(cors());
@@ -21,8 +19,8 @@ export function createApp() {
 
     app.use("/api", apiRouter);
 
-    app.use(errorHandler);
     app.use(notFound);
+    app.use(errorHandler);
 
     return app;
 }

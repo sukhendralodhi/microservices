@@ -18,4 +18,23 @@ redisClient.on("ready", () => {
     console.log("Redis connected successfully");
 });
 
+redisClient.on("end", () => {
+    console.log("Redis client connection closed");
+});
+
 export default redisClient;
+
+export async function connectRedis(): Promise<void> {
+    if (!redisClient.isOpen) {
+        await redisClient.connect();
+    }
+
+    const pong = await redisClient.ping();
+    console.log("redis ping response", pong);
+}
+
+export async function disconnectRedis(): Promise<void> {
+    if (redisClient.isOpen) {
+        await redisClient.quit();
+    }
+}

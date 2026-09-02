@@ -28,6 +28,12 @@ export async function handleGetProduct(
     pId: string
 ): Promise<Product | null> {
 
+
+
+    if (!pId) {
+        throw new AppError(400, "Product id is required");
+    }
+
     // create product key 
     const cacheKey = `product:${pId}`;
 
@@ -41,10 +47,6 @@ export async function handleGetProduct(
     }
 
     console.log("Cache MISS");
-
-    if (!pId) {
-        throw new AppError(400, "Product id is required");
-    }
 
     if (!UUID_REGEX.test(pId)) {
         throw new AppError(400, "Invalid product id");
