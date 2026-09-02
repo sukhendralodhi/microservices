@@ -1,5 +1,5 @@
 import { pool } from "../lib/db";
-import { Product, UpdateProductInput } from "../types/products";
+import { AddProductInput, Product, UpdateProductInput } from "../types/products";
 
 type ProductRow = Product;
 
@@ -73,6 +73,38 @@ export async function handleProductsById(pId: string): Promise<Product> {
     );
 
     return results.rows[0] ?? null
+}
+
+// check the product with name already there 
+export async function handleGetProductByName(
+    name: string
+): Promise<Product | null> {
+    const result = await pool.query<ProductRow>(
+        `
+        SELECT id, name, description, price, stock, category
+        FROM products
+        WHERE LOWER(name) = LOWER($1)
+        `,
+        [name.trim()]
+    )
+
+    return result.rows[0] ?? null
+}
+
+export async function handleAddNewProduct(data: AddProductInput): Promise<Product> {
+    const { name, description, price, stock, category } = data;
+
+    const result = await pool.query<ProductRow>(
+        `
+        INSERT INTO products (name, description, price, stock, category)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, name, description, price, stock, category
+        `,
+        [name, description, price, stock, category]
+    );
+
+    return result.rows[0];
+
 }
 
 export async function HandleUpdateProductById(pId: string, data: UpdateProductInput): Promise<Product | null> {
