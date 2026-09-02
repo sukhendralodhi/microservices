@@ -91,6 +91,33 @@ export async function handleGetProductByName(
     return result.rows[0] ?? null
 }
 
+export async function handleGetProductById(id: string): Promise<Product | null> {
+    const result = await pool.query<ProductRow>(
+        `
+         SELECT id, name, description, price, stock, category
+        FROM products
+        WHERE id = $1
+        `,
+        [id]
+    );
+
+    return result.rows[0] ?? null;
+}
+
+// delete product 
+export async function handleDeleteProductById(id: string): Promise<Product | null> {
+    const result = await pool.query<ProductRow>(
+        `
+        DELETE FROM products
+        WHERE id = $1
+        RETURNING id, name, description, category, price, stock, created_at, updated_at
+        `,
+        [id]
+    );
+
+    return result.rows[0] ?? null
+}
+
 export async function handleAddNewProduct(data: AddProductInput): Promise<Product> {
     const { name, description, price, stock, category } = data;
 

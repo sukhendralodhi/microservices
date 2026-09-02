@@ -1,7 +1,7 @@
 import redisClient from "../config/redis";
 import { PRODUCT_CACHE_TTL, UUID_REGEX } from "../constants/constant";
 import { AppError } from "../errors/AppError";
-import { handleAddNewProduct, handleGetProductByName, handleProducts, handleProductsById, HandleUpdateProductById } from "../repositories/products.repository";
+import { handleAddNewProduct, handleDeleteProductById, handleGetProductByName, handleProducts, handleProductsById, HandleUpdateProductById } from "../repositories/products.repository";
 import { AddProductInput, GetProductsResponse, Product, ProductQueryList, UpdateProductInput } from "../types/products";
 import { formatProductName } from "../utils/product-validation/formatProductName";
 import { validateProductInput } from "../utils/product-validation/validateProductInput";
@@ -164,4 +164,34 @@ export async function getProductViews(id: string): Promise<number> {
     }
 
     return Number(views);
+}
+
+// delete service function code 
+export async function handleDeleteProduct(id: string): Promise<Product | null> {
+
+    if (!id) {
+        throw new AppError(400, "Product id is required");
+    }
+    if (!UUID_REGEX.test(id)) {
+        throw new AppError(400, "Invalid product id");
+    }
+
+    const deletedProduct = await handleDeleteProductById(id);
+
+    if (!deletedProduct) {
+        throw new AppError(404, "Product not found")
+    }
+
+    try {
+        await invalidateProductsCacheById(id);
+        await invalidateProductsCache();
+        console.log("Product caches invalidated");
+    } catch (error) {
+        console.error("Failed to invalidate Redis cache:", error);
+    }
+
+    // console.log(checkProduct);
+
+    return deletedProduct ?? null
+
 }

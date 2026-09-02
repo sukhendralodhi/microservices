@@ -1,6 +1,6 @@
 import { Router } from "express";
 // import { authenticate } from "../middlewares/auth.middleware";
-import { getProductViews, handeGetProducts, handleCreateproduct, handleGetProduct, handleProductUpdate } from "../services/product.service";
+import { getProductViews, handeGetProducts, handleCreateproduct, handleDeleteProduct, handleGetProduct, handleProductUpdate } from "../services/product.service";
 
 
 export const productRouter = Router();
@@ -68,6 +68,23 @@ productRouter.put("/:id", async function (req, res, next) {
             message: "Product updated successfully",
             data: product,
         });
+    } catch (error) {
+        next(error);
+    }
+});
+
+productRouter.delete("/:id", async function (req, res, next) {
+    try {
+        const id = req.params.id;
+
+        const deletedProduct = await handleDeleteProduct(id);
+
+        res.status(200).json({
+            message: "Product deleted successfully",
+            success: true,
+            data: deletedProduct
+        })
+
     } catch (error) {
         next(error);
     }
