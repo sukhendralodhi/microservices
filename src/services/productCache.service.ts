@@ -15,3 +15,8 @@ export async function invalidateProductsCache(): Promise<void> {
 
     console.log(`Invalidated ${keys.length} product cache keys`);
 }
+
+export async function invalidateProductsCacheById(productId: string): Promise<void> {
+    const cacheKey = `product:${productId}`;
+    await redisClient.del(cacheKey);
+}
