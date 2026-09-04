@@ -10,7 +10,8 @@
     "start": "node dist/server.js",
     "migrate": "tsx src/scripts/migrate.ts",
     "example:redis-data-types": "tsx examples/redis-data-types.ts",
-    "example:redis-chaching": "tsx examples/redis-chaching"
+    "example:redis-chaching": "tsx examples/redis-chaching",
+    "documet:loader": "tsx src/utils/aichat/document.utils.ts"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,10 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
+    "@langchain/classic": "^1.0.46",
+    "@langchain/core": "^1.2.9",
+    "@langchain/google-genai": "^2.3.0",
+    "@langchain/textsplitters": "^1.0.1",
     "@types/pg": "^8.21.0",
     "@types/redis": "^4.0.10",
     "bcrypt": "^6.0.0",

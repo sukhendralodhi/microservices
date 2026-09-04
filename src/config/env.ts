@@ -21,5 +21,6 @@ export const env = {
     jwtSecret: checkRequiredEnvVariables("JWT_SECRET"),
     jwtExpiresIn: checkRequiredEnvVariables("JWT_EXPIRES_IN"),
     jwtTokenMaxAge: checkRequiredEnvVariables("JWT_TOKEN_MAX_AGE"),
-    redisUrl: checkRequiredEnvVariables("REDIS_URL")
+    redisUrl: checkRequiredEnvVariables("REDIS_URL"),
+    geminiApiKey: checkRequiredEnvVariables("GOOGLE_API_KEY")
 } as const;
