@@ -21,12 +21,13 @@ aiRouter.get("/", async function (req, res, next) {
             success: true,
             answer: response.content
         });
+
     } catch (error) {
         next(error)
     }
 });
 
-aiRouter.get("/documents", async function (req, res, next) {
+aiRouter.get("/documents", async function (_req, res, next) {
     try {
         const documents = await loadDocument();
         res.json({
@@ -38,7 +39,7 @@ aiRouter.get("/documents", async function (req, res, next) {
     }
 });
 
-aiRouter.get("/test-chunks", async function (req, res, next) {
+aiRouter.get("/test-chunks", async function (_req, res, next) {
     try {
         const chunks = await splitDocuments();
         res.json({

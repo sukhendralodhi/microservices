@@ -3,6 +3,7 @@
 import { TextLoader } from "@langchain/classic/document_loaders/fs/text";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 
+// step 1 
 export async function loadDocument() {
     const loader = new TextLoader("src/documents/company-policy.txt");
     const documents = await loader.load();
@@ -10,6 +11,7 @@ export async function loadDocument() {
     return documents;
 }
 
+// step 2 
 export async function splitDocuments() {
     // load the orignal documents 
     const documents = await loadDocument();
