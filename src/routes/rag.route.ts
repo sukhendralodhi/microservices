@@ -15,11 +15,12 @@ ragRouter.post("/", async function (req, res, next) {
         }
 
         // step 3 
-        const answer = await handleRagChat(question);
+        const result = await handleRagChat(question);
 
-        res.status(200).json({
+        res.json({
             success: true,
-            message: answer
+            message: result.answer,
+            sources: result.sources,
         });
 
     } catch (error) {
