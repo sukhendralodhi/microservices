@@ -11,7 +11,10 @@
     "migrate": "tsx src/scripts/migrate.ts",
     "example:redis-data-types": "tsx examples/redis-data-types.ts",
     "example:redis-chaching": "tsx examples/redis-chaching",
-    "documet:loader": "tsx src/utils/aichat/document.utils.ts"
+    "documet:loader": "tsx src/utils/aichat/document.utils.ts",
+    "embedding:test": "tsx src/scripts/test-embedding.ts",
+    "document:embedding": "tsx src/scripts/test-document-embeddings.ts",
+    "vector:test": "tsx src/scripts/test-vector-store.ts"
   },
   "keywords": [],
   "author": "",

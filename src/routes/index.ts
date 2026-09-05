@@ -6,6 +6,7 @@ import { aiRouter } from "./aichat.route";
 import { authRouter } from "./auth.route";
 import { healthRouter } from "./health.routes";
 import { productRouter } from "./product.route";
+import { ragRouter } from "./rag.route";
 import { userTaskRouter } from "./user.task.routes";
 
 export const apiRouter = Router();
@@ -17,3 +18,4 @@ apiRouter.use("/tasks", userTaskRouter);
 apiRouter.use("/admin/tasks", adminTaskRouter);
 apiRouter.use("/products", productRouter);
 apiRouter.use("/chat", aiRouter);
+apiRouter.use("/company-assistant", ragRouter);
