@@ -1,8 +1,8 @@
-import { createVectorStore } from "../utils/aichat/vector-store.utils";
+import { getVectorStore } from "../utils/aichat/vector-store.utils";
 
 async function testVectorStore() {
     try {
-        const vectorStore = await createVectorStore();
+        const vectorStore = await getVectorStore();
 
         const results = await vectorStore.similaritySearch(
             "How many sick leaves can I take?",

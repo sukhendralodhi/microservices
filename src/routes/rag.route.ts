@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AppError } from "../errors/AppError";
-import { handleRagChat } from "../services/rag.service";
+import { handleRagChat } from "../services/aichat/rag.service";
 
 
 export const ragRouter = Router();
@@ -15,11 +15,12 @@ ragRouter.post("/", async function (req, res, next) {
         }
 
         // step 3 
-        const answer = await handleRagChat(question);
+        const result = await handleRagChat(question);
 
-        res.status(200).json({
+        res.json({
             success: true,
-            message: answer
+            message: result.answer,
+            sources: result.sources,
         });
 
     } catch (error) {
