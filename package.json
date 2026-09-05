@@ -14,7 +14,9 @@
     "documet:loader": "tsx src/utils/aichat/document.utils.ts",
     "embedding:test": "tsx src/scripts/test-embedding.ts",
     "document:embedding": "tsx src/scripts/test-document-embeddings.ts",
-    "vector:test": "tsx src/scripts/test-vector-store.ts"
+    "vector:test": "tsx src/scripts/test-vector-store.ts",
+    "document:store": "tsx src/scripts/store-document-embeddings.ts",
+    "vector:search": "tsx src/scripts/test-vector-search.ts"
   },
   "keywords": [],
   "author": "",

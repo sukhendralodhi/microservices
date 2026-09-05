@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AppError } from "../errors/AppError";
-import { handleRagChat } from "../services/rag.service";
+import { handleRagChat } from "../services/aichat/rag.service";
 
 
 export const ragRouter = Router();
