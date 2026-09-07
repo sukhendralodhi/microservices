@@ -1,11 +1,13 @@
 import { Router } from "express";
 // import { authenticate } from "../middlewares/auth.middleware";
+import { productRateLimiter } from "../middlewares/rateLimit.middleware";
 import { getProductViews, handeGetProducts, handleCreateproduct, handleDeleteProduct, handleGetProduct, handleProductUpdate } from "../services/product.service";
 
 
 export const productRouter = Router();
 
 // productRouter.use(authenticate);
+productRouter.use(productRateLimiter);
 
 productRouter.get("/", async function (req, res, next) {
     try {

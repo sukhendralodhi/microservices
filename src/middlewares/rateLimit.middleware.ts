@@ -1,35 +1,53 @@
-
-// 5 request user can send in 30 seconds
-
 import { NextFunction, Request, Response } from "express";
 import redisClient from "../config/redis";
+import { RATE_LIMIT_MAX_REQUESTS, RATE_LIMIT_WINDOW_MS } from "../constants/constant";
+
 
 export async function productRateLimiter(
     req: Request,
     res: Response,
     next: NextFunction
-) {
+): Promise<void> {
     try {
-
-        // each ip will gate it's own counter in redis 
-        // rate_limit:product:127.0.5.5 
-        // rate_limit:products:::1
-
-        // let's say one user crossing the limit - it will not going to block everyone
-        // real production  - behind a proxy or load balancer
-
         const ip = req.ip || "unknown";
+
         const rateLimiterKey = `rate_limit:products:${ip}`;
 
-        // check how many request user made 
-        // if you have multiple backend server at that place redis can share only one redis counter
         const requestCount = await redisClient.incr(rateLimiterKey);
 
-        
+        // Start the 30-second window
+        // when the first request is received.
+        if (requestCount === 1) {
+            await redisClient.expire(
+                rateLimiterKey,
+                RATE_LIMIT_WINDOW_MS
+            );
+        }
+
+        res.setHeader(
+            "X-RateLimit-Limit",
+            RATE_LIMIT_MAX_REQUESTS
+        );
+
+        res.setHeader(
+            "X-RateLimit-Remaining",
+            Math.max(
+                0,
+                RATE_LIMIT_MAX_REQUESTS - requestCount
+            )
+        );
+
+        if (requestCount > RATE_LIMIT_MAX_REQUESTS) {
+            res.status(429).json({
+                success: false,
+                message: "Too many requests. Please try again later"
+            });
+        }
 
         next();
+
     } catch (error) {
-        console.log("rate limit redis error", error);
+        console.log("Rate limit Redis error:", error);
         next(error);
     }
 }
