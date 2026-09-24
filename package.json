@@ -16,7 +16,8 @@
     "document:embedding": "tsx src/scripts/test-document-embeddings.ts",
     "vector:test": "tsx src/scripts/test-vector-store.ts",
     "document:store": "tsx src/scripts/store-document-embeddings.ts",
-    "vector:search": "tsx src/scripts/test-vector-search.ts"
+    "vector:search": "tsx src/scripts/test-vector-search.ts",
+    "example:redis-pub-sub": "tsx examples/redis-pub-shub.ts"
   },
   "keywords": [],
   "author": "",
